@@ -1,4 +1,4 @@
-package com.example.learningAPISpring.dto.request;
+package com.example.learningAPISpring.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
