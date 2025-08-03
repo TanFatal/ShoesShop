@@ -6,9 +6,14 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3307/testting
-    username: root
-    password: 123456
+    username: ${DB_HOST}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+jwt:
+  auth:
+    app: ShoesShop
+    secret_key: ${JWT_KEY}
+    expires_in: 86400
