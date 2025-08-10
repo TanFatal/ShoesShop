@@ -1,4 +1,4 @@
-package com.example.learningAPISpring.dto;
+package com.example.learningAPISpring.dto.Request;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -10,6 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerErrorException;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Service
 public class RegisterService {
     @Autowired
@@ -25,7 +29,8 @@ public class RegisterService {
     private EmailService emailService;
 
     public RegistrationResponse createUser(RegistrationRequest request) {
-
+        // kiểm tra email tồn tại chưa
+        System.out.println("đã gọi chổ này");
         User existing = userDetailRepository.findByEmail(request.getEmail());
 
         if(null != existing){
@@ -41,10 +46,11 @@ public class RegisterService {
             user.setFirstName(request.getFirstName());
             user.setLastName(request.getLastName());
             user.setEmail(request.getEmail());
+            user.setPhoneNumber(request.getPhoneNumber());
             user.setEnabled(false);
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setProvider("manual");
-
+            user.setCreatedOn(Date.from(Instant.now()));
             String code = VerificationCodeGeneration.generateCode();
 
             user.setVerificationCode(code);

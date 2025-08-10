@@ -35,8 +35,9 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable()) // Tắt CSRF
                 .authorizeHttpRequests((authorize)-> authorize
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/test/products","/test/category").permitAll()
-
+                        .requestMatchers(HttpMethod.GET,"/products","/category").permitAll()
+                        .requestMatchers("/auth/**", "/login", "/register").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated())
 
 

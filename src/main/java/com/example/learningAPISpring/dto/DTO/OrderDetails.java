@@ -1,4 +1,4 @@
-package com.example.learningAPISpring.dto;
+package com.example.learningAPISpring.dto.DTO;
 import com.example.learningAPISpring.entity.Address;
 import com.example.learningAPISpring.entity.OrderStatus;
 import lombok.AllArgsConstructor;

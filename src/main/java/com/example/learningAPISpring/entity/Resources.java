@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Resource {
+public class Resources {
     @Id
     @GeneratedValue
     private UUID id;

@@ -12,10 +12,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  payment:
+    tpbank:
+      account-number: TPBANK_ACCOUNT_NUMBER
+      bank-code: 970423
+    qr:
+      base-url: https://img.vietqr.io/image
   mail:
     host: smtp.gmail.com
     port: 587
-    username: 4701104186@student.hcmue.edu.vn
+    username: zkp.hades@gmail.com
     password: ${MAIL_PASSWORD}
     properties:
       mail:

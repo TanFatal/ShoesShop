@@ -69,7 +69,7 @@ public class Product {
     private CategoryType categoryType;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Resource> resources;
+    private List<Resources> resources;
 
     @PrePersist
     protected void onCreate() {

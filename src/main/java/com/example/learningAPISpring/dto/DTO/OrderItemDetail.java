@@ -1,4 +1,6 @@
-package com.example.learningAPISpring.dto;
+package com.example.learningAPISpring.dto.DTO;
+
+import com.example.learningAPISpring.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,12 +9,13 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class OrderItemRequest {
-    private UUID productId;
+public class OrderItemDetail {
+    private UUID id;
+    private Product product;
     private UUID productVariantId;
-    private Double discount;
     private Integer quantity;
+    private Double itemPrice;
 }
