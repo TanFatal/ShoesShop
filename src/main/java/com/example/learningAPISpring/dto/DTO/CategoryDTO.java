@@ -17,5 +17,4 @@ public class CategoryDTO {
     private String code;
     private String description;
     private List<CategoryTypedDTO> categoryTypes;
-
 }

@@ -43,10 +43,10 @@ public class PaymentService {
     @Value("${spring.payment.tpbank.account-number}")
     private String tpBankAccountNumber;
 
-    @Value("${spring.payment.tpbank.bank-code:970423}")
+    @Value("${spring.payment.tpbank.bank-code}")
     private String bankCode;
 
-    @Value("${payment.qr.base-url}")
+    @Value("${spring.payment.qr.base-url}")
     private String qrBaseUrl;
 
     public PaymentResponse createQRPayment(QRPaymentRequest request) {

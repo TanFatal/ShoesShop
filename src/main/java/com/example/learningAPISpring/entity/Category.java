@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue
+    @Column
     private UUID id;
 
     @Column(nullable = false)

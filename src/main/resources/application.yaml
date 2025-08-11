@@ -18,6 +18,11 @@ spring:
       bank-code: 970423
     qr:
       base-url: https://img.vietqr.io/image
+  cloudinary:
+    cloud_name: ${CLOUDINARY_CLOUD_NAME}
+    api_key: ${CLOUDINARY_API_KEY}
+    api_secret: ${CLOUDINARY_API_SECRET}
+
   mail:
     host: smtp.gmail.com
     port: 587

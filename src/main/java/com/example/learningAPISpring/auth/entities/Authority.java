@@ -18,6 +18,7 @@ import java.util.UUID;
 public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue
+    @Column
     private UUID id;
 
     @Column(nullable = false)

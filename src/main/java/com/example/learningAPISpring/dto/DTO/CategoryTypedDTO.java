@@ -15,4 +15,5 @@ public class CategoryTypedDTO {
     private String name;
     private String code;
     private String description;
+    private UUID categoryId;
 }
