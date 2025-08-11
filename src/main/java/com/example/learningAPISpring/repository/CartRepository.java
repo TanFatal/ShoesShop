@@ -1,7 +1,7 @@
 package com.example.learningAPISpring.repository;
 
+import com.example.learningAPISpring.auth.entities.User;
 import com.example.learningAPISpring.entity.Cart;
-import com.example.learningAPISpring.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;

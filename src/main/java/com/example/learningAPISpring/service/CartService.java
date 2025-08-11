@@ -1,5 +1,7 @@
 package com.example.learningAPISpring.service;
 
+import com.example.learningAPISpring.auth.entities.User;
+import com.example.learningAPISpring.auth.repository.UserDetailRepository;
 import com.example.learningAPISpring.entity.*;
 import com.example.learningAPISpring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CartService {
@@ -18,10 +21,10 @@ public class CartService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserDetailRepository userRepository;
 
     public Cart getCartByUser(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow();
+        User user = userRepository.findByEmail(username);
         return cartRepository.findByUser(user).orElseGet(() -> {
             Cart cart = Cart.builder().user(user).build();
             return cartRepository.save(cart);
@@ -29,7 +32,7 @@ public class CartService {
     }
 
     @Transactional
-    public Cart addToCart(String username, Long productId, int quantity) {
+    public Cart addToCart(String username, UUID productId, int quantity) {
         Cart cart = getCartByUser(username);
         Product product = productRepository.findById(productId).orElseThrow();
         Optional<CartItem> existing = cartItemRepository.findByCartAndProduct(cart, product);
@@ -45,7 +48,7 @@ public class CartService {
     }
 
     @Transactional
-    public Cart removeFromCart(String username, Long productId) {
+    public Cart removeFromCart(String username, UUID productId) {
         Cart cart = getCartByUser(username);
         Product product = productRepository.findById(productId).orElseThrow();
         cartItemRepository.findByCartAndProduct(cart, product).ifPresent(cartItemRepository::delete);

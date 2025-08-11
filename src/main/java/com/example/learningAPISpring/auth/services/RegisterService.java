@@ -54,7 +54,7 @@ public class RegisterService {
             String code = VerificationCodeGeneration.generateCode();
 
             user.setVerificationCode(code);
-            user.setAuthorities(authorityService.getUserAuthority());
+            user.setAuthorities(authorityService.getCustomerAuthorities());
             userDetailRepository.save(user);
             emailService.sendMail(user);
 

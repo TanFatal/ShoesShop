@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -25,13 +26,13 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Cart> addToCart(Principal principal, @RequestParam Long productId, @RequestParam int quantity) {
+    public ResponseEntity<Cart> addToCart(Principal principal, @RequestParam UUID productId, @RequestParam int quantity) {
         Cart cart = cartService.addToCart(principal.getName(), productId, quantity);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
     @PostMapping("/remove")
-    public ResponseEntity<Cart> removeFromCart(Principal principal, @RequestParam Long productId) {
+    public ResponseEntity<Cart> removeFromCart(Principal principal, @RequestParam UUID productId) {
         Cart cart = cartService.removeFromCart(principal.getName(), productId);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }

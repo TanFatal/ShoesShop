@@ -1,5 +1,6 @@
 package com.example.learningAPISpring.entity;
 
+import com.example.learningAPISpring.auth.entities.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;

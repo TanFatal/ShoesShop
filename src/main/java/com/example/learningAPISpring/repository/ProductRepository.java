@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface ProductRepository extends JpaRepository<Product, UUID>, JpaSpecificationExecutor<Product> {
     Product findBySlug(String slug);
-
 }

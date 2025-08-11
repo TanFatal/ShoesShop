@@ -8,6 +8,7 @@ import com.example.learningAPISpring.auth.dto.RegistrationResponse;
 import com.example.learningAPISpring.auth.dto.UserToken;
 import com.example.learningAPISpring.auth.entities.User;
 import com.example.learningAPISpring.auth.repository.UserDetailRepository;
+import com.example.learningAPISpring.auth.services.PasswordService;
 import com.example.learningAPISpring.auth.services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.UUID;
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
@@ -36,6 +38,9 @@ public class AuthController {
 
     @Autowired
     JWTTokenHelper jwtTokenHelper;
+
+    @Autowired
+    PasswordService passwordService;
 
 
     @PostMapping("/login")
@@ -119,6 +124,36 @@ public class AuthController {
             return ResponseEntity.badRequest()
                     .contentType(MediaType.TEXT_HTML)
                     .body("<html><body><h2>Error occurred during verification</h2></body></html>");
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> payload) {
+        // Requires: userId, oldPassword, newPassword
+        try {
+            boolean result = passwordService.changePassword(
+                UUID.fromString(payload.get("userId")),
+                payload.get("oldPassword"),
+                payload.get("newPassword")
+            );
+            if (result) {
+                return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Old password incorrect"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> payload) {
+        // Requires: email
+        boolean result = passwordService.requestPasswordReset(payload.get("email"));
+        if (result) {
+            return ResponseEntity.ok(Map.of("message", "Password reset email sent"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Email not found"));
         }
     }
 }

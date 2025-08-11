@@ -1,6 +1,7 @@
 package com.example.learningAPISpring.auth.entities;
 
 import com.example.learningAPISpring.entity.Address;
+import com.example.learningAPISpring.entity.Cart;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -47,13 +48,16 @@ public class User implements UserDetails {
 
     private boolean enabled=false;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "AUTH_USER_AUTHORITY",joinColumns = @JoinColumn(referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
     private List<Authority> authorities;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Address> addressList;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
 
 
     @Override
@@ -70,4 +74,5 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.email;
     }
+
 }
