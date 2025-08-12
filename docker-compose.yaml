@@ -21,6 +21,8 @@ services:
       - database
     ports:
       - "8088:8088"
+    env_file: 
+      - .env
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/testting
       SPRING_DATASOURCE_USERNAME: root
