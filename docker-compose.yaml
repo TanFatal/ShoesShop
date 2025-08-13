@@ -21,7 +21,8 @@ services:
     build: .
     container_name: springboot-app
     depends_on:
-      - database
+      mysql-db:
+        condition: service_healthy
     ports:
       - "8088:8088"
     env_file: 
