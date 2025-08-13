@@ -48,6 +48,6 @@ jobs:
         script: |
           cd /BackEnd/ShoesShop
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/shoesshop:latest
-          docker stop springboot-app || true
-          docker rm springboot-app || true
-          docker run -d --name springboot-app -p 8088:8088 ${{ secrets.DOCKERHUB_USERNAME }}/shoesshop:latest
+          docker stop shoesshop || true
+          docker rm shoesshop || true
+          docker-compose up -d --force-recreate

@@ -15,6 +15,7 @@ services:
       --bind-address=0.0.0.0
 
   app:
+    image: duytanpn/springboot-app:latest
     build: .
     container_name: springboot-app
     depends_on:

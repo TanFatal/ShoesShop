@@ -15,15 +15,11 @@ import java.util.Collections;
 
 @SpringBootApplication
 public class LearningApiSpringApplication {
-//	@Value("${stripe.secret}")
-//	private String stripeSecret;
+
 	public static void main(String[] args) {
 		SpringApplication.run(LearningApiSpringApplication.class, args);
 	}
-//	@PostConstruct
-//	public void init(){
-//		Stripe.apiKey = this.stripeSecret;
-//	}
+
 	@Bean
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
