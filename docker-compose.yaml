@@ -34,3 +34,4 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SERVER_PORT: 8088
       SERVER_SERVLET_CONTEXT_PATH: /test
+    command: sh -c "./wait-for-it.sh database:3306 -- java -jar app.jar"
