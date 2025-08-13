@@ -50,4 +50,4 @@ jobs:
           docker stop springboot-app
           docker rm springboot-app
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/shoesshop:latest
-          docker-compose up -d --force-recreate
+          docker-compose up -d --no-deps --build springboot-app
