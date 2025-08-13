@@ -10,9 +10,11 @@ services:
       MYSQL_DATABASE: testting
     ports:
       - "3307:3306"
-    command:
-      --default-authentication-plugin=mysql_native_password
-      --bind-address=0.0.0.0
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-p123456" ]
+      interval: 5s
+      retries: 10
+      timeout: 5s
 
   app:
     image: duytanpn/springboot-app:latest
