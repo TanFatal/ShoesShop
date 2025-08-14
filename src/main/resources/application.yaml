@@ -40,3 +40,15 @@ jwt:
     app: ShoesShop
     secret_key: ${JWT_KEY}
     expires_in: 86400
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true

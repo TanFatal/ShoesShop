@@ -16,7 +16,7 @@ services:
       retries: 10
       timeout: 20s
 
-  app:
+  springboot-app:
     image: duytanpn/springboot-app:latest
     build: .
     container_name: springboot-app
@@ -36,3 +36,21 @@ services:
       SERVER_PORT: 8088
       SERVER_SERVLET_CONTEXT_PATH: /test
     restart: on-failure
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
