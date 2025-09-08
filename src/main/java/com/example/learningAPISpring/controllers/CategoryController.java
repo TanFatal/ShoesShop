@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/admin/category")
 @CrossOrigin
 public class CategoryController {
 
@@ -33,8 +33,6 @@ public class CategoryController {
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
 
     }
-
-
 
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody CategoryDTO categoryDto){

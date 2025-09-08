@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/user/cart")
 @CrossOrigin
 public class CartController {
     @Autowired

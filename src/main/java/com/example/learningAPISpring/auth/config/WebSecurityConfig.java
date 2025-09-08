@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -27,20 +28,24 @@ public class WebSecurityConfig {
     @Autowired
     private JWTTokenHelper jwtTokenHelper;
     private static final String[] publicApis= {
-            "/test/auth/**"
+            "/auth/**",           // API đăng nhập, đăng ký
+            "/v3/api-docs/**",    // Swagger
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+
     };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) // Tắt CSRF
+        http.csrf(AbstractHttpConfigurer::disable) // Tắt CSRF
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize)-> authorize
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/products","/category").permitAll()
-                        .requestMatchers("/auth/**", "/login", "/register").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .requestMatchers("/user/**").hasAnyRole("CUSTOMER", "ADMIN")
                         .anyRequest().authenticated())
-
-
                 .addFilterBefore(new JWTFilter(userDetailsService, jwtTokenHelper), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

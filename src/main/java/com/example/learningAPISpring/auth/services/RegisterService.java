@@ -2,6 +2,7 @@ package com.example.learningAPISpring.auth.services;
 
 import com.example.learningAPISpring.auth.dto.RegistrationRequest;
 import com.example.learningAPISpring.auth.dto.RegistrationResponse;
+import com.example.learningAPISpring.auth.entities.Authority;
 import com.example.learningAPISpring.auth.entities.User;
 import com.example.learningAPISpring.auth.helper.VerificationCodeGeneration;
 import com.example.learningAPISpring.auth.repository.UserDetailRepository;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerErrorException;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -29,8 +29,7 @@ public class RegisterService {
     private EmailService emailService;
 
     public RegistrationResponse createUser(RegistrationRequest request) {
-        // kiểm tra email tồn tại chưa
-        System.out.println("đã gọi chổ này");
+
         User existing = userDetailRepository.findByEmail(request.getEmail());
 
         if(null != existing){
@@ -54,7 +53,8 @@ public class RegisterService {
             String code = VerificationCodeGeneration.generateCode();
 
             user.setVerificationCode(code);
-            user.setAuthorities(authorityService.getCustomerAuthorities());
+            Authority userRole = authorityService.getCustomerAuthority();
+            user.getRoles().add(userRole);
             userDetailRepository.save(user);
             emailService.sendMail(user);
 
@@ -76,4 +76,5 @@ public class RegisterService {
         user.setEnabled(true);
         userDetailRepository.save(user);
     }
+
 }

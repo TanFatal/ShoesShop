@@ -19,8 +19,9 @@ public class UserRoleService {
 
     @Autowired
     private AuthorityService authorityService;
+
     @Transactional
-    public User changeUserRole(UUID userId, String roleCode) {
+    public User assignRoleToUser(UUID userId, String roleCode) {
         User user = userRepository.findById(userId);
         if (user == null) {
             throw new RuntimeException("User not found");
@@ -29,8 +30,32 @@ public class UserRoleService {
         if (authority == null) {
             throw new RuntimeException("Role not found: " + roleCode);
         }
-        user.setAuthorities(Collections.singletonList(authority));
+        user.getRoles().add(authority);
 
         return userRepository.save(user);
+    }
+
+
+    @Transactional
+    public void  removeRoleFromUser(UUID userId, String roleCode) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        Authority authority = authorityRepository.findByRoleCode(roleCode);
+        if (authority == null) {
+            throw new RuntimeException("Role not found: " + roleCode);
+        }
+        user.getRoles().remove(authority);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void banUser(UUID id) {
+        User user = userRepository.findById(id);
+        if (user != null) {
+            user.setEnabled(false);
+            userRepository.save(user);
+        }
     }
 }

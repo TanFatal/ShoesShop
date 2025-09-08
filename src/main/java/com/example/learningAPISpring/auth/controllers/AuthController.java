@@ -2,18 +2,17 @@ package com.example.learningAPISpring.auth.controllers;
 
 
 import com.example.learningAPISpring.auth.config.JWTTokenHelper;
-import com.example.learningAPISpring.auth.dto.LoginRequest;
-import com.example.learningAPISpring.auth.dto.RegistrationRequest;
-import com.example.learningAPISpring.auth.dto.RegistrationResponse;
-import com.example.learningAPISpring.auth.dto.UserToken;
+import com.example.learningAPISpring.auth.dto.*;
 import com.example.learningAPISpring.auth.entities.User;
 import com.example.learningAPISpring.auth.repository.UserDetailRepository;
 import com.example.learningAPISpring.auth.services.PasswordService;
 import com.example.learningAPISpring.auth.services.RegisterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -127,24 +126,6 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> payload) {
-        // Requires: userId, oldPassword, newPassword
-        try {
-            boolean result = passwordService.changePassword(
-                UUID.fromString(payload.get("userId")),
-                payload.get("oldPassword"),
-                payload.get("newPassword")
-            );
-            if (result) {
-                return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Old password incorrect"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
-        }
-    }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> payload) {

@@ -15,9 +15,6 @@ import java.util.Date;
 @Component
 public class JWTTokenHelper {
 
-    @Value("${jwt.auth.app}")
-    private String appName;
-
     @Value("${jwt.auth.secret_key}")
     private String secretKey;
 
@@ -26,7 +23,6 @@ public class JWTTokenHelper {
 
     public String generateToken(String userName){
         return Jwts.builder()
-                .issuer(appName)
                 .subject(userName)
                 .issuedAt(new Date())
                 .expiration(generateExpirationDate())

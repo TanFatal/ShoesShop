@@ -18,8 +18,8 @@ public class PasswordService {
     @Autowired
     private EmailService emailService;
 
-    public boolean changePassword(UUID userId, String oldPassword, String newPassword) {
-        User user = userDetailRepository.findById(userId);
+    public boolean changePassword(String curentUserName, String oldPassword, String newPassword) {
+        User user = userDetailRepository.findByEmail(curentUserName);
         if (user == null) throw new RuntimeException("User not found");
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             return false;

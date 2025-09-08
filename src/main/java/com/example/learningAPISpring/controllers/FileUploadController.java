@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/admin/file")
 @CrossOrigin
 public class FileUploadController {
     @Autowired

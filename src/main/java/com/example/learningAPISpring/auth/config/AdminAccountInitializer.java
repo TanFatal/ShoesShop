@@ -22,7 +22,7 @@ public class AdminAccountInitializer {
     @Bean
     public CommandLineRunner initAdminAccount(UserDetailRepository userRepository, AuthorityRepository authorityRepository) {
         return args -> {
-            if (userRepository.findByEmail("admin") == null) {
+            if (userRepository.findByEmail("admin@gmail.com") == null) {
                 Authority adminRole = authorityRepository.findByRoleCode("ROLE_ADMIN");
                 if (adminRole == null) {
                     adminRole = authorityRepository.save(Authority.builder()
@@ -33,15 +33,15 @@ public class AdminAccountInitializer {
                 User admin = User.builder()
                         .firstName("Admin")
                         .lastName("User")
-                        .email("admin")
+                        .email("admin@gmail.com")
                         .password(passwordEncoder.encode("admin"))
                         .enabled(true)
                         .createdOn(Date.from(Instant.now()))
-                        .authorities(Collections.singletonList(adminRole))
+                        .roles(Collections.singleton(adminRole))
                         .provider("manual")
                         .build();
                 userRepository.save(admin);
-                System.out.println("Default admin account created: admin/admin");
+                System.out.println("Default admin account created: admin@gmail.com/admin");
             }
         };
     }
